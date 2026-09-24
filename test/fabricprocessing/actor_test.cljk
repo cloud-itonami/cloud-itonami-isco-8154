@@ -1,5 +1,5 @@
 (ns fabricprocessing.actor-test
-  (:require [clojure.test :refer [deftest is testing]]
+  (:require [kotoba.test :refer [deftest is testing]]
             [fabricprocessing.actor :as actor]
             [fabricprocessing.store :as store]))
 
