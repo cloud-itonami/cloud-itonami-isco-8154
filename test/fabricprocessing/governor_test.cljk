@@ -1,5 +1,5 @@
 (ns fabricprocessing.governor-test
-  (:require [clojure.test :refer [deftest is testing]]
+  (:require [kotoba.test :refer [deftest is testing]]
             [fabricprocessing.store :as store]
             [fabricprocessing.governor :as governor]))
 
