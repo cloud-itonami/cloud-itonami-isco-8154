@@ -1,0 +1,31 @@
+;; What this vertical's robot physically does, declared for
+;; kotoba.robotics.process (kotoba-lang/robotics). `kbb -M:physics` runs it.
+;;
+;; README "Robotics premise": a plant-monitoring robot performs chemical-level
+;; sensing and sample collection near dyeing/bleaching equipment; handling
+;; concentrated chemicals or working near pressurised equipment needs human
+;; sign-off. Its physical work is liquid: watching a dye bath drain between
+;; process steps, and the chemical dosing line it samples from.
+;;
+;; Every number without a cited source is marked `estimate` in its :basis.
+;; Replacing an estimate with a sourced value is this bot's growth work.
+{:physics/schema "itonami.physical-ai.spec.v1"
+ :repo "cloud-itonami/cloud-itonami-isco-8154"
+ :cases
+ [{:id :dye-bath-drain
+   :kind :tank-drain
+   :procedure "dyeing machine bath drains through its drain valve between the dye and rinse steps while the robot tracks the level"
+   :params {:tank-area-m2 1.5 :h0-m 1.2 :h-target-m 0.05 :cd 0.62 :q-in-m3s 0.0 :dt-s 0.5}
+   :sweep {:param :orifice-area-m2 :values [0.002 0.004 0.006 0.008 0.010]}
+   :quantity :time-to-target-s
+   :limit {:max 300.0 :basis "estimate: a drain step of about 5 minutes in a batch dyeing cycle"}
+   :boundary {:lo 0.001 :hi 0.02}}
+  {:id :chemical-dosing-line
+   :kind :pipe-flow
+   :procedure "dosing pump sends dilute bleaching liquor through the 25 mm dosing line to the machine; the robot samples at the line end"
+   :params {:diameter-m 0.025 :length-m 30.0 :roughness-m 1.5e-6
+            :density-kg-m3 1100.0 :viscosity-pa-s 1.2e-3 :pump-efficiency 0.55 :elevation-m 2.0}
+   :sweep {:param :q-m3s :values [0.0002 0.0005 0.001 0.002 0.004]}
+   :quantity :pressure-drop-pa
+   :limit {:max 300000.0 :basis "estimate: about 3 bar discharge pressure of a small chemical dosing pump"}
+   :boundary {:lo 0.0001 :hi 0.006}}]}
