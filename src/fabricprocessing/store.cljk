@@ -1,6 +1,6 @@
 (ns fabricprocessing.store
   "SSoT for the ISCO-08 8154 independent fabric processing operations
-  actor (itonami actor pattern, ADR-2607011000 / CLAUDE.md Actors
+  actor (itonami actor pattern, ADR-2607011000 / AGENTS.md Actors
   section; README's 'Robotics premise' — a plant-monitoring robot
   performs chemical-level sensing and sample collection under this
   advisor/governor pair, which never dispatches hardware itself).
